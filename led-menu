@@ -1,0 +1,3 @@
+#!/bin/bash
+SCRIPT_DIR="$(dirname "$0")/scripts"
+$SCRIPT_DIR/$(ls "$SCRIPT_DIR" | dmenu -p "Choose LED Matrix Design" "$@")

@@ -1,0 +1,7 @@
+#!/bin/bash
+LED_CLI="$(dirname "$0")/../inputmodule-control_cli_linux led-matrix"
+timeout 1 $LED_CLI --clock
+$LED_CLI --start-game game-of-life --game-param current-matrix
+sleep 30
+$LED_CLI --stop-game
+$LED_CLI --percentage 0
