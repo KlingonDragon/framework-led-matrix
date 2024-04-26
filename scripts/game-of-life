@@ -4,4 +4,4 @@ timeout 1 $LED_CLI --clock
 $LED_CLI --start-game game-of-life --game-param current-matrix
 sleep 30
 $LED_CLI --stop-game
-$LED_CLI --percentage 0
+$LED_CLI --sleeping true

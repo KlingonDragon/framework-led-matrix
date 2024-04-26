@@ -1,3 +1,5 @@
 #!/bin/bash
 SCRIPT_DIR="$(dirname "$0")/scripts"
-$SCRIPT_DIR/$(ls "$SCRIPT_DIR" | dmenu -p "Choose LED Matrix Design" "$@")
+selected_script=$(ls "$SCRIPT_DIR" | dmenu -p "Choose LED Matrix Design" "$@")
+if [ "$selected_script" == '' ]; then exit 10; fi
+$SCRIPT_DIR/$selected_script

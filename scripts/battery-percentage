@@ -3,4 +3,14 @@ LED_CLI="$(dirname "$0")/../inputmodule-control_cli_linux led-matrix"
 BATTERY_PATH=$(ls -d /sys/class/power_supply/BAT* 2>/dev/null)
 if [ -z "$BATTERY_PATH" ]; then exit 0; fi
 bat_pc=$(cat "$BATTERY_PATH/capacity")
-$LED_CLI --percentage $bat_pc --brightness $((100-$bat_pc))
+$LED_CLI --percentage $bat_pc
+sleep 1
+$LED_CLI --string " $bat_pc%"
+sleep 2
+$LED_CLI --percentage $bat_pc
+sleep 1
+$LED_CLI --string " $bat_pc%"
+sleep 2
+$LED_CLI --percentage $bat_pc
+sleep 1
+$LED_CLI --sleeping true
