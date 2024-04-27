@@ -1,0 +1,13 @@
+#!/bin/bash
+LED_CLI="$(dirname "$0")/../inputmodule-control_cli_linux led-matrix"
+THERMAL_ZONES=$(ls -d /sys/class/thermal/thermal_zone* 2>/dev/null)
+counter=0
+sum=0
+for thermal_zone in $THERMAL_ZONES
+do
+    counter=$(("$counter" + 1))
+    sum=$(("$sum" + (("$(cat $thermal_zone/temp)"))))
+done
+$LED_CLI --string " $((((((sum / counter))+272150))/1000))K"
+sleep 2
+$LED_CLI --sleeping true

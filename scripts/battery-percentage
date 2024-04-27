@@ -1,16 +1,26 @@
 #!/bin/bash
 LED_CLI="$(dirname "$0")/../inputmodule-control_cli_linux led-matrix"
-BATTERY_PATH=$(ls -d /sys/class/power_supply/BAT* 2>/dev/null)
-if [ -z "$BATTERY_PATH" ]; then exit 0; fi
-bat_pc=$(cat "$BATTERY_PATH/capacity")
-$LED_CLI --percentage $bat_pc
-sleep 1
-$LED_CLI --string " $bat_pc%"
-sleep 2
-$LED_CLI --percentage $bat_pc
-sleep 1
-$LED_CLI --string " $bat_pc%"
-sleep 2
-$LED_CLI --percentage $bat_pc
-sleep 1
+BATTERY_PATHS=$(ls -d /sys/class/power_supply/BAT* 2>/dev/null)
+if [ -z "$BATTERY_PATHS" ]; then exit 0; fi
+for battery_path in $BATTERY_PATHS
+do
+    bat_pc=$(cat "$battery_path/capacity")
+    bat_name=$(basename "$battery_path")
+    $LED_CLI --string "$bat_name"
+    sleep 1
+    $LED_CLI --percentage $bat_pc
+    sleep 1
+    $LED_CLI --string " $bat_pc%"
+    sleep 2
+    $LED_CLI --string "$bat_name"
+    sleep 1
+    $LED_CLI --percentage $bat_pc
+    sleep 1
+    $LED_CLI --string " $bat_pc%"
+    sleep 2
+    $LED_CLI --string "$bat_name"
+    sleep 1
+    $LED_CLI --percentage $bat_pc
+    sleep 1
+done
 $LED_CLI --sleeping true
